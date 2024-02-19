@@ -338,8 +338,33 @@ def find_route(stops, routes, start_point, destination_point):
     return route
 
 # Define the starting and destination points
-start_point = Stop(31, "SM Batangas Front", 13.755887, 121.070682)
-destination_point = Stop(170, "Malusak, Santa Rosa", 14.3112177,121.1117894)
+def find_stop_by_name(stops, name):
+    for stop in stops:
+        if stop.name.lower() == name.lower():
+            return stop
+    return None
+
+def input_start_and_destination(stops):
+    while True:
+        start_name = input("Enter the name of the start point: ")
+        start_point = find_stop_by_name(stops, start_name)
+        if start_point:
+            break
+        else:
+            print("Invalid start point. Please try again.")
+
+    while True:
+        destination_name = input("Enter the name of the destination point: ")
+        destination_point = find_stop_by_name(stops, destination_name)
+        if destination_point:
+            break
+        else:
+            print("Invalid destination point. Please try again.")
+
+    return start_point, destination_point
+
+# Input start and destination points
+start_point, destination_point = input_start_and_destination(stops)
 
 # Find and construct the route
 trip_route = find_route(stops, routes, start_point, destination_point)
