@@ -219,26 +219,26 @@ def find_route(stops, routes, start_point, destination_point):
     return route
 
 # Define the starting and destination points
-start_point = Stop(50, "Petron Calicanto", 13.768442, 121.053359)
-destination_point = Stop(4, "BSU Alangilan", 13.7860755, 121.0689882)
+start_point = Stop(35, "Lumang Palengke (D. Silang)", 13.757084, 121.055968)
+destination_point = Stop(58, "Bauan Public Market", 13.791876, 121.010137)
 
 # Find and construct the route
-route = find_route(stops, routes, start_point, destination_point)
-if route:
+trip_route = find_route(stops, routes, start_point, destination_point)
+if trip_route:
     print("Starting Point:", start_point.name)
-    current_route_name = None
-    for i, (stop, route_names) in enumerate(route):
-        if i == 0:
-            print("First Route:", route_names[0])
-            current_route_name = route_names[0]
-        elif i == len(route) - 1:
+    route_count = 1
+    for i, (stop, _) in enumerate(trip_route):
+        if i == len(trip_route) - 1:
             print("Destination:", stop.name)
         else:
-            print("Stopover:", stop.name)
-            if len(route_names) > 1:
-                next_route_name = route_names[1]
-                print("Next Route:", next_route_name)
-            else:
-                print("Next Route:", current_route_name)
+            current_stop_id = stop.stop_id
+            next_stop_id = trip_route[i + 1][0].stop_id
+            for j, route_obj in enumerate(routes):
+                if current_stop_id in route_obj.route_order and next_stop_id in route_obj.route_order:
+                    if i > 0:  # Print stopover before the next route
+                        print("Stopover:", stop.name)
+                    print("Route {} ({}): {}".format(route_count, j+1, route_obj.route_name))
+                    route_count += 1
+                    break
 else:
     print("No route found")
