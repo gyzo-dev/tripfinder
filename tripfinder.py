@@ -369,7 +369,7 @@ start_point, destination_point = input_start_and_destination(stops)
 # Find and construct the route
 trip_route = find_route(stops, routes, start_point, destination_point)
 if trip_route:
-    print("Starting Point:", start_point.name)
+    print("Starting Point:", start_point.name,"\n")
     route_count = 1
     for i, (stop, _) in enumerate(trip_route):
         if i == len(trip_route) - 1:
@@ -380,7 +380,7 @@ if trip_route:
             for j, route_obj in enumerate(routes):
                 if current_stop_id in route_obj.route_order and next_stop_id in route_obj.route_order:
                     if i > 0:  # Print stopover before the next route
-                        print("Stopover:", stop.name)
+                        print("Stopover:", stop.name, "\n")
                     print("Route {} ({}): {}".format(route_count, j+1, route_obj.route_name))
                     route_count += 1
                     break
